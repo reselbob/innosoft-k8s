@@ -1,0 +1,33 @@
+docker pull reselbob/pinger
+
+docker inspect reselbob/pinger
+
+docker run -d -p 3001:3000 --name pinger reselbob/pinger
+
+curl localhost:3001
+
+docker diff pinger
+
+echo "hi there" > hello.txt
+
+docker cp hello.txt pinger:/hello.txt
+
+docker diff pinger
+
+docker exec -it pinger sh
+
+echo "hi there, cool class" > hello.txt
+
+docker cp hello.txt pinger:/hello.txt
+
+docker exec -it pinger sh
+
+docker cp hello.txt pinger:/etc/hello.txt
+
+docker update --cpu-shares 512 pinger
+
+docker diff pinger
+
+docker exec pinger rm -rf /etc/localtime
+
+docker diff pinger
