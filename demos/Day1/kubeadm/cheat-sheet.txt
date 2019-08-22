@@ -1,0 +1,63 @@
+chmod 600 lab.pem
+
+#master
+ssh -i lab.pem ubuntu@107.22.71.195
+
+#worker 1
+ssh -i lab.pem ubuntu@54.197.213.95
+
+#worker 2
+ssh -i lab.pem ubuntu@23.20.173.58
+
+#ALL SERVERS
+
+sudo su -
+
+apt-get update && apt-get install -y apt-transport-https
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
+apt-get update
+
+apt-get install -y kubelet=1.15.0-00 kubeadm=1.15.0-00 kubectl
+
+####### MASTER #######
+kubeadm init --kubernetes-version=1.15.0 --ignore-preflight-errors=all
+
+<COPY THE NODE JOIN COMMAND>
+
+exit
+
+mkdir -p $HOME/.kube
+
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
+
+export kubever=$(kubectl version | base64 | tr -d '\n')
+
+curl -SL "https://cloud.weave.works/k8s/net?k8s-version=$kubever" | kubectl apply -f -
+
+kubectl get pods -n kube-system
+
+####### NODES #######
+
+sudo kubeadm join <command from kubeadm init output> --ignore-preflight-errors=all
+
+watch kubectl get nodes
+
+#CLEAN UP
+
+sudo su -
+
+kubeadm reset 
+
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+
+rm -rf  /etc/Kubernetes
+
+rm -rf $HOME/.kube
