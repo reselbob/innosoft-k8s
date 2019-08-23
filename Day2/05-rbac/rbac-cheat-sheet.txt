@@ -1,0 +1,19 @@
+kubectl create namespace office
+
+openssl genrsa -out employee.key 2048
+
+openssl req -new -key employee.key -out employee.csr -subj "/CN=employee/O=acme"
+
+ls -ltr /etc/kubernetes/pki
+
+sudo openssl x509 -req -in employee.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out employee.crt -days 500
+
+mkdir -p /home/ubuntu/.certs && mv employee.crt employee.key /home/ubuntu/.certs
+
+kubectl config set-credentials employee --client-certificate=/home/ubuntu/.certs/employee.crt  --client-key=/home/ubuntu/.certs/employee.key
+
+kubectl config set-context employee-context --cluster=kubernetes --namespace=office --user=employee
+
+kubectl --context=employee-context get pods
+
+kubectl create -f manifests/role-deployment-manager.yaml
