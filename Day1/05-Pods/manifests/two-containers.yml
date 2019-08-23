@@ -14,8 +14,7 @@ spec:
     image: nginx
     volumeMounts:
     - name: shared-data
-      mountPath: /usr/share/nginx/html
-
+      mountPath: /usr/share/nginx/
   - name: debian-container
     image: debian
     volumeMounts:
