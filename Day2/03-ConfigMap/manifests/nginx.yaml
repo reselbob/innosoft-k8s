@@ -2,7 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: helloworld-nginx
-  app: helloworld-nginx
+  labels:
+    app: helloworld-nginx
 spec: 
 
   restartPolicy: Always
