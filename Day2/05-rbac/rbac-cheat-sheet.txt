@@ -17,3 +17,13 @@ kubectl config set-context employee-context --cluster=kubernetes --namespace=off
 kubectl --context=employee-context get pods
 
 kubectl create -f manifests/role-deployment-manager.yaml
+
+kubectl create -f manifests/rolebinding-deployment-manager.yaml
+
+kubectl --context=employee-context get pods
+
+kubectl --context=employee-context run --image nginx acme-nginx
+
+kubectl --context=employee-context get pods
+
+kubectl --context=employee-context get pods --namespace=default
