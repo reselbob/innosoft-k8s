@@ -15,3 +15,8 @@ exit
 kubectl delete pod redis
 
 kubectl create configmap nginx-config --from-file=config/reverseproxy.conf
+
+kubectl apply -f manifests/nginx.yaml
+
+kubectl apply -f manifests/nginx-service.yaml
+
