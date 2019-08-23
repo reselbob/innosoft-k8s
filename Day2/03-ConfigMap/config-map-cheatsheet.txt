@@ -10,6 +10,8 @@ CONFIG GET maxmemory
 
 CONFIG GET maxmemory-policy
 
+exit
+
 kubectl delete pod redis
 
 kubectl create configmap nginx-config --from-file=config/reverseproxy.conf

@@ -21,10 +21,10 @@ spec:
     ports:
     - containerPort: 3000
     
-    volumes:
-    - name: nginx-config
-      configMap:
-        name: nginx-config
-        items:
-        - key: reverseproxy.conf
-          path: reverseproxy.conf 
+  volumes:
+  - name: nginx-config
+    configMap:
+      name: nginx-config
+      items:
+      - key: reverseproxy.conf
+        path: reverseproxy.conf 
