@@ -1,0 +1,15 @@
+kubectl create configmap example-redis-config --from-file=config/redis-config
+
+kubectl get configmap example-redis-config -o yaml
+
+kubectl create -f manifests/redis-pod.yaml
+
+kubectl exec -it redis redis-cli
+
+CONFIG GET maxmemory
+
+CONFIG GET maxmemory-policy
+
+kubectl delete pod redis
+
+kubectl create configmap nginx-config --from-file=config/reverseproxy.conf
