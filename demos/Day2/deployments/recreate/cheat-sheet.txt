@@ -1,0 +1,9 @@
+kubectl apply -f deployment-replace-01.yaml
+
+kubectl get pods -l type=example_code
+
+kubectl apply -f deployment-replace-02.yaml
+
+kubectl get pods -l type=example_code
+
+kubectl delete all --all

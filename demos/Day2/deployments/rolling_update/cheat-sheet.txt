@@ -1,0 +1,9 @@
+kubectl apply -f deployment-rolling-01.yaml
+
+kubectl get pods -l type=example_code
+
+kubectl apply -f deployment-rolling-02.yaml
+
+kubectl get pods -l type=example_code
+
+kubectl delete all --all
